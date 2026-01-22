@@ -1,0 +1,38 @@
+def add_student():
+    with open("data.txt", "a") as f:
+        roll = input("Roll No: ")
+        name = input("Name: ")
+        course = input("Course: ")
+        f.write(f"{roll},{name},{course}\n")
+    print("Student added successfully")
+
+def view_students():
+    try:
+        with open("data.txt", "r") as f:
+            for line in f:
+                print(line.strip())
+    except FileNotFoundError:
+        print("No records found")
+
+def search_student():
+    roll = input("Enter Roll No to search: ")
+    found = False
+    with open("data.txt", "r") as f:
+        for line in f:
+            if line.startswith(roll):
+                print("Record Found:", line)
+                found = True
+    if not found:
+        print("Student not found")
+
+def delete_student():
+    roll = input("Enter Roll No to delete: ")
+    lines = []
+    with open("data.txt", "r") as f:
+        lines = f.readlines()
+
+    with open("data.txt", "w") as f:
+        for line in lines:
+            if not line.startswith(roll):
+                f.write(line)
+    print("Student deleted successfully")
